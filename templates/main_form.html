@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+    {% if name %}
+        <h1>Hello {{ name }}!</h1>
+    {% else %}
+        <div>
+            <h1>Main Form</h1>
+            <br/>
+            <br/>
+            <br/>
+
+<!--     First solve why the content is not rendering on the page       -->
+<!--     Then try to send a list with form variables,       -->
+<!--     Then make a for loop to render them on the page       -->
+            <form method="POST">
+                {{ form.hidden_tag() }}
+
+                {{ form.name.label }}
+                {{ form.name() }}
+                <br/>
+
+                {{ form.family_name.label }}
+                {{ form.family_name() }}
+                <br/>
+
+                {{ form.email.label }}
+                {{ form.email() }}
+                <br/>
+
+                {{ form.password.label }}
+                {{ form.password() }}
+                <br/>
+
+                {{ form.country.label }}
+                {{ form.country() }}
+                <br/>
+
+                {{ form.genre.label }}
+                {{ form.genre() }}
+                <br/>
+
+                {{ form.subjects.label }}
+                {{ form.subjects() }}
+                <br/>
+
+                {{ form.message.label }}
+                {{ form.message() }}
+                <br/>
+
+                {{ form.submit() }}
+    <!--            <label>Prénom</label>-->
+    <!--            <input required type="text" name="name" placeholder="Prénom">-->
+    <!--            <label>Nom</label>-->
+    <!--            <input required type="text" name="family_name" placeholder="Nom">-->
+    <!--            <label>E-mail</label>-->
+    <!--            <input required type="text" name="email" placeholder="E-mail">-->
+    <!--            <label>Pays</label>-->
+    <!--            <input required type="text" name="country" placeholder="Selectioner votre pays ...">-->
+    <!--            <label>Genre (H/F/X)</label>-->
+    <!--            <input required type="text" name="genre">-->
+    <!--            &lt;!&ndash; Subject -> If there is none marked response, the default (autre) have to be marked &ndash;&gt;-->
+    <!--            <label>Sujets</label>-->
+    <!--            <input type="text" name="sujets">-->
+    <!--            <label>Message</label>-->
+    <!--            <input required type="text" name="message" placeholder="Votre message ici ...">-->
+            </form>
+        </div>
+    {% endif %}
+
+{% endblock %}
