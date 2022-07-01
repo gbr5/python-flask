@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>Résultat</h1>
+    <div>
+        <span>Prénom</span>
+        <p>{{ name }}</p>
+    </div>
+    <div>
+        <span>Nom</span>
+        <p>{{ family_name|striptags|escape|forceescape }}</p>
+    </div>
+    <div>
+        <span>E-mail</span>
+        <p>{{ email|striptags|escape|forceescape }}</p>
+    </div>
+    <div>
+        <span>Mot de passe</span>
+        <p>{{ password|striptags|escape|forceescape }}</p>
+    </div>
+    <div>
+        <span>Pays</span>
+        <p>{{ country|striptags|escape }}</p>
+    </div>
+    <div>
+        <span>Genre</span>
+        <p>{{ genre|striptags|escape }}</p>
+    </div>
+    <div>
+        <span>Sujets</span>
+        <p>{{ subjects|striptags|escape }}</p>
+    </div>
+    <div>
+        <span>Message</span>
+        <p>{{ message|striptags|escape }}</p>
+    </div>
+    <div>
+        <span>Message Extra</span>
+        <p>{{ message1 }}</p>
+    </div>
+{% endblock %}
