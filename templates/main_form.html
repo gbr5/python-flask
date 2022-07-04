@@ -3,57 +3,60 @@
 
 {% block content %}
 
-        <div>
-            <h1>Main Form</h1>
-            <br/>
-            <br/>
-            <br/>
+    <div>
+        <h1>Main Form</h1>
+        <br/>
+        <br/>
+        <br/>
 
 <!--     First solve why the content is not rendering on the page       -->
 <!--     Then try to send a list with form variables,       -->
 <!--     Then make a for loop to render them on the page       -->
-            <form method="POST">
-                {{ form.hidden_tag() }}
+        <form method="POST">
+            {{ form.hidden_tag() }}
 
-                {{ form.name.label(class="form-label") }}
-                {{ form.name(class="form-control") }}
-                <br/>
+            {{ form.name.label(class="form-label") }}
+            {{ form.name(class="form-control") }}
+            <br/>
 
-                {{ form.family_name.label(class="form-label") }}
-                {{ form.family_name(class="form-control") }}
-                <br/>
+            {{ form.family_name.label(class="form-label") }}
+            {{ form.family_name(class="form-control") }}
+            <br/>
 
-                {{ form.email.label(class="form-label") }}
-                {{ form.email(class="form-control") }}
-                <br/>
+            {{ form.email.label(class="form-label") }}
+            {{ form.email(class="form-control") }}
+            <br/>
 
-                {{ form.password.label(class="form-label") }}
-                {{ form.password(class="form-control") }}
-                <br/>
+            {{ form.password.label(class="form-label") }}
+            {{ form.password(class="form-control") }}
+            <br/>
 
-                {{ form.country.label(class="form-label") }}
-                {{ form.country(class="form-control") }}
-                <br/>
+            {{ form.country.label(class="form-label") }}
+            {{ form.country(class="form-control") }}
+            <br/>
 
-                {{ form.genre.label(class="form-label") }}
-                {{ form.genre() }}
-                <br/>
+            {{ form.genre.label(class="form-label") }}
+            {{ form.genre() }}
+            <br/>
 
-                {{ form.subjects.label(class="form-label") }}
-                {{ form.subjects() }}
-                <br/>
+            {{ form.subjects.label(class="form-label") }}
+            {{ form.subjects() }}
+            <br/>
 
-                {{ form.message.label(class="form-label") }}
-                {{ form.message(class="form-control") }}
-                <br/>
+            {{ form.message.label(class="form-label") }}
+            {{ form.message(class="form-control") }}
+            <br/>
 
-                {{ form.message1.label(class="form-label") }}
-                {{ form.message1(class="form-control") }}
-                <br/>
+            {{ form.message1.label(class="form-label") }}
+            {{ form.message1(class="form-control") }}
+            <br/>
 
-                {{ form.submit(class="btn btn-primary") }}
-            </form>
-        </div>
-    {% endif %}
+            {{ form.hpfield.label(style="opacity:0;position:absolute;top:0;left:0;height:0;width:0;z-index:-1;") }}
+            {{ form.hpfield(style="opacity:0;position:absolute;top:0;left:0;height:0;width:0;z-index:-1;") }}
+            <br/>
+
+            {{ form.submit(class="btn btn-primary") }}
+        </form>
+    </div>
 
 {% endblock %}

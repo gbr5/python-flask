@@ -6,6 +6,9 @@ from wtforms import widgets, StringField, SubmitField, PasswordField, EmailField
 from wtforms.validators import DataRequired, Email, Length
 from flask_wtf.csrf import CSRFProtect
 
+# Ainda falta:
+#   Fazer o honeypot (como testar?)
+#   Fazer o captcha https://flask-wtf.readthedocs.io/en/1.0.x/config/#recaptcha
 
 # Create a Flask Instance
 app = Flask(__name__)
@@ -18,10 +21,6 @@ countries = []
 for elem in countries_response:
     countries.append(list(elem.items())[0][1])
 
-# [] = square brakets
-# {} = curly braquets
-# () = parenthesis
-
 
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
@@ -32,6 +31,8 @@ class MultiCheckboxField(SelectMultipleField):
 class MainForm(FlaskForm):
     subject_choices = [("fix", "Réparation"), ("order", "Commande"), ("other", "Autres")]
     genres = ["M", "F", "X"]
+    hpfield_choices = ["oui", "non"]
+
     name = StringField('Quelle est votre prénom', validators=[DataRequired()]) # 1
     family_name = StringField('Quelle est votre nom', validators=[DataRequired()]) # 2
     email = EmailField('Quelle est votre e-mail', validators=[DataRequired(), Email(message="Vous devez entrer un e-mail valide")]) # 3
@@ -41,6 +42,7 @@ class MainForm(FlaskForm):
     subjects = MultiCheckboxField('Quelle sont les sujets qui vous interesse', choices=subject_choices) # 7
     message = TextAreaField('Quelle est votre message', validators=[DataRequired()]) # 8
     message1 = TextAreaField('Message extra', validators=[DataRequired()]) # 9
+    hpfield = RadioField("Voulez vous s'inscrire a notre news letter?", choices=hpfield_choices) # 10
     submit = SubmitField("Soumettre")
 
 
@@ -145,6 +147,7 @@ def main_form():
     subjects = None # 7
     message = None # 8
     message1 = None # 8
+    hpfield = None
     form = MainForm()
 
     # Validate Form
@@ -167,6 +170,8 @@ def main_form():
         form.message.data = ''
         message1 = form.message1.data
         form.message1.data = ''
+        hpfield = form.hpfield.data
+        form.hpfield.data = ''
 
         return render_template('success.html',
                                name=name, # 1 
@@ -177,7 +182,8 @@ def main_form():
                                genre=genre, # 6
                                subjects=subjects, # 7
                                message=message, # 8
-                               message1=message1) # 9
+                               message1=message1, # 9
+                               hpfield=hpfield) # 10
 
     return render_template('main_form.html',
                            name=name,
@@ -189,6 +195,7 @@ def main_form():
                            subjects=subjects,
                            message=message,
                            message1=message1,
+                           hpfield=hpfield,
                            form=form)
 
 
