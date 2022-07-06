@@ -6,15 +6,12 @@ from wtforms import widgets, StringField, SubmitField, PasswordField, EmailField
 from wtforms.validators import DataRequired, Email, Length
 from flask_wtf.csrf import CSRFProtect
 
-# Ainda falta:
-#   Fazer o honeypot (como testar?)
-#   Fazer o captcha https://flask-wtf.readthedocs.io/en/1.0.x/config/#recaptcha
-
 # Create a Flask Instance
 app = Flask(__name__)
 csrf = CSRFProtect(app)
 app.config['SECRET_KEY'] = "my_secret_key"
 
+# Creating a list with all country names
 countries_api = 'https://restcountries.com/v2/all'
 countries_response = requests.get(countries_api).json()
 countries = []
@@ -22,6 +19,7 @@ for elem in countries_response:
     countries.append(list(elem.items())[0][1])
 
 
+# Creating a Field with multiple checkbox options
 class MultiCheckboxField(SelectMultipleField):
     widget = widgets.ListWidget(prefix_label=False)
     option_widget = widgets.CheckboxInput()
@@ -42,7 +40,6 @@ class MainForm(FlaskForm):
     subjects = MultiCheckboxField('Quelle sont les sujets qui vous interesse', choices=subject_choices) # 7
     message = TextAreaField('Quelle est votre message', validators=[DataRequired()]) # 8
     hpfield = StringField("Si vous voulez s'inscrire a notre news letter mettez votre e-mail") # 9
-    # hpfield = RadioField("Voulez vous s'inscrire a notre news letter?", choices=hpfield_choices) # 9
     submit = SubmitField("Soumettre")
 
 
@@ -52,19 +49,19 @@ def index():
     return render_template('index.html')
 
 
-# Invalid URL
+# Invalid URL page
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
 
 
-# Internal Server Error
+# Internal Server Error page
 @app.errorhandler(500)
 def internal_server_error(e):
     return render_template('500.html'), 500
 
 
-# XSS Defense
+# XSS Defense for name, family_name and message field
 name_replacements = {
     '<': '',
     '>': '',
@@ -146,25 +143,11 @@ def main_form():
     genre = None # 6
     subjects = None # 7
     message = None # 8
-    hpfield = None
+    hpfield = None # 9
     form = MainForm()
-    print(
-        'olha aqui',
-        form.name.data,  # 1
-        form.family_name.data,  # 2
-        form.email.data,  # 3
-        form.password.data,  # 4
-        form.country.data,  # 5
-        form.genre.data,  # 6
-        form.subjects.data,  # 7
-        form.message.data,  # 8
-        f'form.hpfield.data: {form.hpfield.data}',  # 9
-    )
 
-    # Validate Form
-    # if form.validate_on_submit() and form.hpfield.data is None:
+    # Validate Form and check if honeypot was responded
     if form.validate_on_submit() and form.hpfield.data == '':
-    # if form.validate_on_submit():
         name = replace_all(form.name.data, name_replacements),
         form.name.data = ''
         family_name = replace_all(form.family_name.data, name_replacements)
@@ -182,7 +165,6 @@ def main_form():
         message = replace_all(form.message.data, message_replacements)
         form.message.data = ''
         hpfield = form.hpfield.data
-        # form.hpfield.data = ''
 
         return render_template('success.html',
                                name=name, # 1 
