@@ -41,8 +41,8 @@ class MainForm(FlaskForm):
     genre = RadioField('Quelle est votre genre', validators=[DataRequired()], choices=genres) # 6
     subjects = MultiCheckboxField('Quelle sont les sujets qui vous interesse', choices=subject_choices) # 7
     message = TextAreaField('Quelle est votre message', validators=[DataRequired()]) # 8
-    message1 = TextAreaField('Message extra', validators=[DataRequired()]) # 9
-    hpfield = RadioField("Voulez vous s'inscrire a notre news letter?", choices=hpfield_choices) # 10
+    hpfield = StringField("Si vous voulez s'inscrire a notre news letter mettez votre e-mail") # 9
+    # hpfield = RadioField("Voulez vous s'inscrire a notre news letter?", choices=hpfield_choices) # 9
     submit = SubmitField("Soumettre")
 
 
@@ -146,13 +146,26 @@ def main_form():
     genre = None # 6
     subjects = None # 7
     message = None # 8
-    message1 = None # 8
     hpfield = None
     form = MainForm()
+    print(
+        'olha aqui',
+        form.name.data,  # 1
+        form.family_name.data,  # 2
+        form.email.data,  # 3
+        form.password.data,  # 4
+        form.country.data,  # 5
+        form.genre.data,  # 6
+        form.subjects.data,  # 7
+        form.message.data,  # 8
+        f'form.hpfield.data: {form.hpfield.data}',  # 9
+    )
 
     # Validate Form
-    if form.validate_on_submit():
-        name = form.name.data
+    # if form.validate_on_submit() and form.hpfield.data is None:
+    if form.validate_on_submit() and form.hpfield.data == '':
+    # if form.validate_on_submit():
+        name = replace_all(form.name.data, name_replacements),
         form.name.data = ''
         family_name = replace_all(form.family_name.data, name_replacements)
         form.family_name.data = ''
@@ -168,10 +181,8 @@ def main_form():
         form.subjects.data = ''
         message = replace_all(form.message.data, message_replacements)
         form.message.data = ''
-        message1 = form.message1.data
-        form.message1.data = ''
         hpfield = form.hpfield.data
-        form.hpfield.data = ''
+        # form.hpfield.data = ''
 
         return render_template('success.html',
                                name=name, # 1 
@@ -181,9 +192,8 @@ def main_form():
                                country=country, # 5
                                genre=genre, # 6
                                subjects=subjects, # 7
-                               message=message, # 8
-                               message1=message1, # 9
-                               hpfield=hpfield) # 10
+                               hpfield=hpfield, # 8
+                               message=message) # 9
 
     return render_template('main_form.html',
                            name=name,
@@ -194,7 +204,6 @@ def main_form():
                            genre=genre,
                            subjects=subjects,
                            message=message,
-                           message1=message1,
                            hpfield=hpfield,
                            form=form)
 
