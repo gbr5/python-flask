@@ -148,7 +148,7 @@ def main_form():
 
     # Validate Form and check if honeypot was responded
     if form.validate_on_submit() and form.hpfield.data == '':
-        name = replace_all(form.name.data, name_replacements),
+        name = replace_all(form.name.data, name_replacements)
         form.name.data = ''
         family_name = replace_all(form.family_name.data, name_replacements)
         form.family_name.data = ''
@@ -167,15 +167,15 @@ def main_form():
         hpfield = form.hpfield.data
 
         return render_template('success.html',
-                               name=name, # 1 
-                               family_name=family_name, # 2
-                               email=email, # 3
-                               password=password, # 4
-                               country=country, # 5
-                               genre=genre, # 6
-                               subjects=subjects, # 7
-                               hpfield=hpfield, # 8
-                               message=message) # 9
+                               name=name,
+                               family_name=family_name,
+                               email=email,
+                               password=password,
+                               country=country,
+                               genre=genre,
+                               subjects=subjects,
+                               hpfield=hpfield,
+                               message=message)
 
     return render_template('main_form.html',
                            name=name,

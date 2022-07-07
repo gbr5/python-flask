@@ -5,7 +5,7 @@
     <h1>Résultat</h1>
     <div>
         <span>Prénom</span>
-        <p>{{ name }}</p>
+        <p>{{ name|striptags|escape|forceescape }}</p>
     </div>
     <div>
         <span>Nom</span>
